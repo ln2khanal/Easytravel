@@ -1,0 +1,44 @@
+{% extends "layout.html" %}
+{% block body %}
+<script type=text/javascript>
+  $(function() {
+    $('a#findroute').bind('click', function() {
+      $.post($SCRIPT_ROOT + '/travel', {
+        a: $('input[name="startnode"]').val(),
+        b: $('input[name="endnode"]').val()
+      }, function(data) {
+    	  $("#route").text("");
+    	  $("#distance").text("");
+    	  $("#route").text("");
+    	  if(data.status == "success"){
+	    	  $("#route").text("Route = "+data.route+".");
+	    	  $("#distance").text("Length = "+data.distance+" Kilometers.");
+    	  }
+    	  else{
+    		  $("#route").text("Error! "+data.message);
+    	  }
+      });
+      return false;
+    });
+  });
+</script>
+<fieldset>
+<h2>Welcome to EasyTravel!</h2> Lets you find the shortest traffic jam free route in Kathmandu like busy cities.This is just a test for now.
+<p>You need to enter starting station and the destination station to get the shortest route which will be traffic jam free. </p></h2><h4>Available stations are:</h4>1. 'a'<br/>2. 'b'<br/>3. 'w'<br/>4. 'x'<br/>5. 'y'<br/>6. 'z'
+
+		
+			<fieldset>
+			<p>Travel easily through traffic free route.</p>
+			<form>
+				Starting Station<input type="text" name="startnode" id="startnode" placeholder="You start from" required><br />
+				Ending Station<input type="text" name="endnode" id="endnode" placeholder="You go to" required> <br />
+			</form>
+<span id=route></span><br />
+<span id=distance></span>
+<p>Request for the &nbsp;<a href=# id=findroute>ROUTE</a>
+			</fieldset>	
+
+
+</fieldset>
+
+{% endblock %}
