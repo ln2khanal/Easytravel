@@ -16,20 +16,20 @@ def compute(node_a, node_b):
             return  message
         if (node_a == node_b):
             if(node_a not in node_graph):
-                message = jsonify(status="failed", message="Station names are not provided properly. Please try again with correct station names.")
+                message = jsonify(status="failed", message="Unknown source and destination stations.")
             else:
-                message = jsonify(status="success", route="Turn about 360 degree!", distance="0")
+                message = jsonify(status="success", route="Please alter the source and destination stations.", distance="0")
             return  message
 
         if  ((node_a in node_graph) and (node_b in node_graph)):
             report = shortestpath(node_graph, node_a, node_b, [], {}, {})
-            print report[1]
+        
             route = ""
             for i in range(0,len(report[1])):
                 route +=report[1][i]+""
             message = jsonify(status="success", route=route, distance=report[0])
-#            flask.flash( .message)
+
             return  message
         else:
-            message = jsonify(status="failed", message="Route with the provided station names either jammed or doesn't exists!")
+            message = jsonify(status="failed", message="One or both of the station names are not found in the entire route.")
             return message
